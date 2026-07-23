@@ -42,10 +42,6 @@ class Fizza < Formula
     system "xattr", "-cr", bin/"fizza"
   end
 
-  test do
-    assert_match version.to_s, shell_output("#{bin}/fizza --version")
-  end
-
   def caveats
     return unless OS.mac?
 
@@ -55,5 +51,9 @@ class Fizza < Formula
         codesign --force --sign - #{opt_bin}/fizza
         xattr -cr #{opt_bin}/fizza
     EOS
+  end
+
+  test do
+    assert_match version.to_s, shell_output("#{bin}/fizza --version")
   end
 end
