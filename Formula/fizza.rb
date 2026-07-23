@@ -33,9 +33,27 @@ class Fizza < Formula
 
   def install
     bin.install "fizza"
+
+    # Unsigned GitHub release builds trip Gatekeeper ("damaged" / blocked).
+    # Ad-hoc sign and strip quarantine so the CLI runs after brew install.
+    return unless OS.mac?
+
+    system "codesign", "--force", "--sign", "-", bin/"fizza"
+    system "xattr", "-cr", bin/"fizza"
   end
 
   test do
     assert_match version.to_s, shell_output("#{bin}/fizza --version")
+  end
+
+  def caveats
+    return unless OS.mac?
+
+    <<~EOS
+      Fizza is not notarized. If macOS blocks the binary, run:
+
+        codesign --force --sign - #{opt_bin}/fizza
+        xattr -cr #{opt_bin}/fizza
+    EOS
   end
 end

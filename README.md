@@ -64,13 +64,23 @@ Until those fields change, `brew upgrade` will not install the new build.
 
 ### Gatekeeper / “damaged” on macOS
 
-Curie is not notarized yet. The cask clears quarantine in `postflight`. If you still see *“Curie is damaged…”*:
+Neither Curie nor Fizza is notarized yet. The tap **ad-hoc codesigns** and strips quarantine xattrs on install.
+
+If macOS still blocks them:
 
 ```bash
-xattr -dr com.apple.quarantine /Applications/Curie.app
-# or
+# Curie
+codesign --force --deep --sign - /Applications/Curie.app
+xattr -cr /Applications/Curie.app
+
+# Fizza (Homebrew)
+codesign --force --sign - "$(brew --prefix)/opt/fizza/bin/fizza"
+xattr -cr "$(brew --prefix)/opt/fizza/bin/fizza"
+
+# or reinstall Curie without quarantine
 brew reinstall --cask --no-quarantine sthbryan/tap/curie
 ```
+
 
 ## Source
 
