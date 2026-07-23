@@ -78,7 +78,7 @@ codesign --force --sign - "$(brew --prefix)/opt/fizza/bin/fizza"
 xattr -cr "$(brew --prefix)/opt/fizza/bin/fizza"
 
 # or reinstall Curie without quarantine
-brew reinstall --cask --no-quarantine sthbryan/tap/curie
+HOMEBREW_CASK_OPTS="--no-quarantine" brew reinstall --cask sthbryan/tap/curie
 ```
 
 

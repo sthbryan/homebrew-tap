@@ -42,6 +42,6 @@ cask "curie" do
 
     Or reinstall without Homebrew quarantine:
 
-      brew reinstall --cask --no-quarantine sthbryan/tap/curie
+      HOMEBREW_CASK_OPTS="--no-quarantine" brew reinstall --cask sthbryan/tap/curie
   EOS
 end
