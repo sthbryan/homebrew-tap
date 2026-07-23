@@ -61,6 +61,17 @@ Each Fizza release publishes platform tarballs. Update `Formula/fizza.rb`:
 
 Until those fields change, `brew upgrade` will not install the new build.
 
+
+### Gatekeeper / “damaged” on macOS
+
+Curie is not notarized yet. The cask clears quarantine in `postflight`. If you still see *“Curie is damaged…”*:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Curie.app
+# or
+brew reinstall --cask --no-quarantine sthbryan/tap/curie
+```
+
 ## Source
 
 - Curie: https://github.com/sthbryan/curie
