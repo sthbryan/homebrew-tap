@@ -1,6 +1,6 @@
 cask "curie" do
-  version "0.3.0"
-  sha256 "7b26f36589bdf23796bdba8818ccdd5fc2ce4b886a8fab30ae0c3298f3f218ea"
+  version "0.4.1"
+  sha256 "599fbeaf525611b203be7a3ab2efbc654548ca8b8dad9994cd37f074091948f9"
 
   url "https://github.com/sthbryan/curie/releases/download/v#{version}/Curie_#{version}_aarch64.dmg"
   name "Curie"
