@@ -34,8 +34,6 @@ class Fizza < Formula
   def install
     bin.install "fizza"
 
-    # Unsigned GitHub release builds trip Gatekeeper ("damaged" / blocked).
-    # Ad-hoc sign and strip quarantine so the CLI runs after brew install.
     return unless OS.mac?
 
     system "codesign", "--force", "--sign", "-", bin/"fizza"

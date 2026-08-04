@@ -17,8 +17,6 @@ cask "curie" do
 
   app "Curie.app"
 
-  # Unsigned builds trip Gatekeeper ("Curie is damaged and can't be opened").
-  # Ad-hoc sign + strip all xattrs so first launch works after brew install.
   postflight do
     app_path = "#{appdir}/Curie.app"
     system_command "/usr/bin/codesign",

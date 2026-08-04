@@ -32,9 +32,8 @@ class FtmCli < Formula
   end
 
   def install
-    # The release pipeline publishes raw binaries (no tarball wrapper), so
-    # brew downloads a single file and we install it under the canonical
-    # `ftm` name regardless of the URL's suffix.
+    # Release pipeline publishes raw binaries (no tarball wrapper); install
+    # under the canonical `ftm` name regardless of the URL suffix.
     if OS.mac? && Hardware::CPU.arm?
       bin.install "ftm-macos-arm64" => "ftm"
     elsif OS.mac?
@@ -45,8 +44,6 @@ class FtmCli < Formula
       bin.install "ftm-linux-x64" => "ftm"
     end
 
-    # GitHub release builds are not notarized. Ad-hoc sign + strip xattrs
-    # so the CLI runs on macOS without Gatekeeper complaining.
     return unless OS.mac?
 
     system "codesign", "--force", "--sign", "-", bin/"ftm"

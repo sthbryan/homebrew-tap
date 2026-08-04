@@ -12,20 +12,16 @@ cask "ftm" do
     strategy :github_latest
   end
 
-  # The release.yml pipeline only builds the macOS .app for arm64 today
-  # (WebKit native + universal binary are heavier and untested).
+  # The release pipeline only builds the macOS .app for arm64 (WebKit native
+  # and universal binaries are heavier and untested).
   depends_on arch: :arm64
   depends_on macos: :catalina
 
   # The zip ships the .app under the asset-friendly slug ftm-desktop-macos.app,
-  # but the visible bundle name (CFBundleDisplayName inside) is "Foundry Tunnel
-  # Manager". Rename on install so /Applications shows the friendly name
-  # instead of the slug.
+  # but the visible bundle name (CFBundleDisplayName) is "Foundry Tunnel
+  # Manager". Rename on install so /Applications shows the friendly name.
   app "ftm-desktop-macos.app", target: "Foundry Tunnel Manager.app"
 
-  # Unsigned GitHub-release builds trip Gatekeeper ("damaged and can't be
-  # opened"). Ad-hoc sign and strip xattrs so first launch works after
-  # `brew install --cask`, matching what we do for curie.
   postflight do
     app_path = "#{appdir}/Foundry Tunnel Manager.app"
     system_command "/usr/bin/codesign",
