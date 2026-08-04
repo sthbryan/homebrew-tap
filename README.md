@@ -1,150 +1,48 @@
 # sthbryan/homebrew-tap
 
-Homebrew tap for [Curie](https://github.com/sthbryan/curie), [Fizza](https://github.com/sthbryan/fizza), [Foundry Tunnel Manager](https://github.com/sthbryan/ftm), and related tools.
+Homebrew tap with cask and formula definitions for [Curie](https://github.com/sthbryan/curie), [Fizza](https://github.com/sthbryan/fizza), and [Foundry Tunnel Manager](https://github.com/sthbryan/ftm).
 
 ## Packages
 
-| Package | Type | Install |
-|---------|------|---------|
-| **curie** | cask (macOS app) | `brew install --cask sthbryan/tap/curie` |
-| **fizza** | formula (CLI) | `brew install sthbryan/tap/fizza` |
-| **ftm** (desktop) | cask (macOS app) | `brew install --cask sthbryan/tap/ftm` |
-| **ftm** (CLI) | formula (CLI + web) | `brew install sthbryan/tap/ftm-cli` (alias: `ftm`) |
+| Package | Type | Platforms | Install |
+|---------|------|-----------|---------|
+| [curie](https://github.com/sthbryan/curie) | Cask (desktop app) | macOS (arm64) | `brew install --cask sthbryan/tap/curie` |
+| [fizza](https://github.com/sthbryan/fizza) | Formula (CLI) | macOS, Linux (arm64 + amd64) | `brew install sthbryan/tap/fizza` |
+| [ftm](https://github.com/sthbryan/ftm) — desktop | Cask (desktop app) | macOS (arm64) | `brew install --cask sthbryan/tap/ftm` |
+| [ftm](https://github.com/sthbryan/ftm) — CLI | Formula (CLI + web) | macOS, Linux (arm64 + amd64) | `brew install sthbryan/tap/ftm-cli` |
 
-### Curie (desktop app)
+## Usage
 
-```bash
-brew install --cask sthbryan/tap/curie
-```
-
-- macOS Apple Silicon (`arm64`)
-- macOS Big Sur or newer
+Install the tap once, then install any package:
 
 ```bash
-brew update && brew upgrade --cask curie
-brew uninstall --cask --zap curie
+brew tap sthbryan/tap
+
+brew install --cask sthbryan/tap/curie   # Curie desktop app
+brew install --cask sthbryan/tap/ftm     # Foundry Tunnel Manager desktop app
+brew install sthbryan/tap/fizza          # Fizza CLI
+brew install sthbryan/tap/ftm-cli        # ftm CLI (installed as `ftm`)
 ```
 
-### Fizza (CLI + local web + MCP)
-
-```bash
-brew install sthbryan/tap/fizza
-```
-
-- macOS and Linux (`arm64` + `amd64`)
+Upgrade a package after a new release:
 
 ```bash
 brew update && brew upgrade fizza
-fizza --version
-fizza serve
+brew update && brew upgrade --cask curie
 ```
 
-### ftm (CLI + local web dashboard)
+Uninstall a cask (removes app data):
 
 ```bash
-brew install sthbryan/tap/ftm-cli
+brew uninstall --cask --zap curie
 ```
 
-- macOS and Linux (`arm64` + `amd64`)
-- Same binary that ships in the GitHub release tarballs; TUI + embedded web dashboard on `http://localhost:40500`
+## Development
 
-```bash
-brew update && brew upgrade ftm-cli
-ftm --version
-ftm                 # TUI + web
-ftm --web           # web only, open browser
-```
+This repo only holds package definitions; binaries are published to the GitHub Releases page of each project. See [MAINTAINING.md](MAINTAINING.md) for the release and update workflow.
 
-### ftm (desktop app — Wails shell)
+## Sources
 
-```bash
-brew install --cask sthbryan/tap/ftm
-```
-
-- macOS Apple Silicon (`arm64`)
-- macOS Catalina or newer
-- Same UI as the web dashboard, wrapped in a native window by Wails v3
-
-```bash
-brew update && brew upgrade --cask ftm
-brew uninstall --cask --zap ftm
-```
-
-## How this tap is maintained
-
-This repo only holds package definitions. Binaries live on GitHub Releases of each project.
-
-### Curie (cask)
-
-Each Curie release publishes a DMG. Update `Casks/curie.rb`:
-
-1. Upload `Curie_<version>_aarch64.dmg` to the GitHub Release.
-2. `shasum -a 256 Curie_<version>_aarch64.dmg`
-3. Bump `version` and `sha256` in `Casks/curie.rb`
-4. Commit and push this tap
-
-### Fizza (formula)
-
-Each Fizza release publishes platform tarballs. Update `Formula/fizza.rb`:
-
-1. Publish `fizza_<version>_{darwin,linux}_{arm64,amd64}.tar.gz`
-2. Copy hashes from `fizza_<version>_checksums.txt` (or `shasum -a 256`)
-3. Bump `version` and every platform `sha256` in `Formula/fizza.rb`
-4. Commit and push this tap
-
-### ftm (formula)
-
-Each ftm release publishes raw platform binaries (no tarball wrapper). Update `Formula/ftm.rb`:
-
-1. Publish `ftm-{linux-x64,linux-arm64,macos-x64,macos-arm64,windows-x64.exe}`
-2. `shasum -a 256` each one
-3. Bump `version` and every platform `sha256` in `Formula/ftm.rb`
-4. Commit and push this tap
-
-The `bin.install "..." => "ftm"` rename keeps the installed binary name stable regardless of platform.
-
-### ftm (cask)
-
-The macOS desktop pipeline zips the Wails `.app` as `ftm-desktop-macos.app.zip`. Update `Casks/ftm.rb`:
-
-1. Publish `ftm-desktop-macos.app.zip` (the `package-macos-app.sh` script in the ftm repo does this automatically during release).
-2. `shasum -a 256 ftm-desktop-macos.app.zip`
-3. Bump `version` and `sha256` in `Casks/ftm.rb`
-4. Commit and push this tap
-
-Until those fields change, `brew upgrade` will not install the new build.
-
-
-### Gatekeeper / “damaged” on macOS
-
-Neither Curie nor Fizza nor ftm is notarized yet. The tap **ad-hoc codesigns** and strips quarantine xattrs on install.
-
-If macOS still blocks them:
-
-```bash
-# Curie
-codesign --force --deep --sign - /Applications/Curie.app
-xattr -cr /Applications/Curie.app
-
-# Fizza (Homebrew)
-codesign --force --sign - "$(brew --prefix)/opt/fizza/bin/fizza"
-xattr -cr "$(brew --prefix)/opt/fizza/bin/fizza"
-
-# ftm desktop (Homebrew cask)
-codesign --force --deep --sign - /Applications/ftm-desktop-macos.app
-xattr -cr /Applications/ftm-desktop-macos.app
-
-# ftm CLI (Homebrew)
-codesign --force --sign - "$(brew --prefix)/opt/ftm-cli/bin/ftm"
-xattr -cr "$(brew --prefix)/opt/ftm-cli/bin/ftm"
-
-# or reinstall any of the casks without quarantine
-HOMEBREW_CASK_OPTS="--no-quarantine" brew reinstall --cask sthbryan/tap/<name>
-```
-
-
-## Source
-
-- Curie: https://github.com/sthbryan/curie
-- Fizza: https://github.com/sthbryan/fizza
-- Foundry Tunnel Manager: https://github.com/sthbryan/ftm
+- [Curie](https://github.com/sthbryan/curie)
+- [Fizza](https://github.com/sthbryan/fizza)
+- [Foundry Tunnel Manager](https://github.com/sthbryan/ftm)
