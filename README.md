@@ -1,6 +1,6 @@
 # sthbryan/homebrew-tap
 
-Homebrew tap for [Curie](https://github.com/sthbryan/curie), [Fizza](https://github.com/sthbryan/fizza), and related tools.
+Homebrew tap for [Curie](https://github.com/sthbryan/curie), [Fizza](https://github.com/sthbryan/fizza), [Foundry Tunnel Manager](https://github.com/sthbryan/ftm), and related tools.
 
 ## Packages
 
@@ -8,6 +8,8 @@ Homebrew tap for [Curie](https://github.com/sthbryan/curie), [Fizza](https://git
 |---------|------|---------|
 | **curie** | cask (macOS app) | `brew install --cask sthbryan/tap/curie` |
 | **fizza** | formula (CLI) | `brew install sthbryan/tap/fizza` |
+| **ftm** (desktop) | cask (macOS app) | `brew install --cask sthbryan/tap/ftm` |
+| **ftm** (CLI) | formula (CLI + web) | `brew install sthbryan/tap/ftm-cli` (alias: `ftm`) |
 
 ### Curie (desktop app)
 
@@ -37,6 +39,37 @@ fizza --version
 fizza serve
 ```
 
+### ftm (CLI + local web dashboard)
+
+```bash
+brew install sthbryan/tap/ftm-cli
+```
+
+- macOS and Linux (`arm64` + `amd64`)
+- Same binary that ships in the GitHub release tarballs; TUI + embedded web dashboard on `http://localhost:40500`
+
+```bash
+brew update && brew upgrade ftm-cli
+ftm --version
+ftm                 # TUI + web
+ftm --web           # web only, open browser
+```
+
+### ftm (desktop app — Wails shell)
+
+```bash
+brew install --cask sthbryan/tap/ftm
+```
+
+- macOS Apple Silicon (`arm64`)
+- macOS Catalina or newer
+- Same UI as the web dashboard, wrapped in a native window by Wails v3
+
+```bash
+brew update && brew upgrade --cask ftm
+brew uninstall --cask --zap ftm
+```
+
 ## How this tap is maintained
 
 This repo only holds package definitions. Binaries live on GitHub Releases of each project.
@@ -59,12 +92,32 @@ Each Fizza release publishes platform tarballs. Update `Formula/fizza.rb`:
 3. Bump `version` and every platform `sha256` in `Formula/fizza.rb`
 4. Commit and push this tap
 
+### ftm (formula)
+
+Each ftm release publishes raw platform binaries (no tarball wrapper). Update `Formula/ftm.rb`:
+
+1. Publish `ftm-{linux-x64,linux-arm64,macos-x64,macos-arm64,windows-x64.exe}`
+2. `shasum -a 256` each one
+3. Bump `version` and every platform `sha256` in `Formula/ftm.rb`
+4. Commit and push this tap
+
+The `bin.install "..." => "ftm"` rename keeps the installed binary name stable regardless of platform.
+
+### ftm (cask)
+
+The macOS desktop pipeline zips the Wails `.app` as `ftm-desktop-macos.app.zip`. Update `Casks/ftm.rb`:
+
+1. Publish `ftm-desktop-macos.app.zip` (the `package-macos-app.sh` script in the ftm repo does this automatically during release).
+2. `shasum -a 256 ftm-desktop-macos.app.zip`
+3. Bump `version` and `sha256` in `Casks/ftm.rb`
+4. Commit and push this tap
+
 Until those fields change, `brew upgrade` will not install the new build.
 
 
 ### Gatekeeper / “damaged” on macOS
 
-Neither Curie nor Fizza is notarized yet. The tap **ad-hoc codesigns** and strips quarantine xattrs on install.
+Neither Curie nor Fizza nor ftm is notarized yet. The tap **ad-hoc codesigns** and strips quarantine xattrs on install.
 
 If macOS still blocks them:
 
@@ -77,8 +130,16 @@ xattr -cr /Applications/Curie.app
 codesign --force --sign - "$(brew --prefix)/opt/fizza/bin/fizza"
 xattr -cr "$(brew --prefix)/opt/fizza/bin/fizza"
 
-# or reinstall Curie without quarantine
-HOMEBREW_CASK_OPTS="--no-quarantine" brew reinstall --cask sthbryan/tap/curie
+# ftm desktop (Homebrew cask)
+codesign --force --deep --sign - /Applications/ftm-desktop-macos.app
+xattr -cr /Applications/ftm-desktop-macos.app
+
+# ftm CLI (Homebrew)
+codesign --force --sign - "$(brew --prefix)/opt/ftm-cli/bin/ftm"
+xattr -cr "$(brew --prefix)/opt/ftm-cli/bin/ftm"
+
+# or reinstall any of the casks without quarantine
+HOMEBREW_CASK_OPTS="--no-quarantine" brew reinstall --cask sthbryan/tap/<name>
 ```
 
 
@@ -86,3 +147,4 @@ HOMEBREW_CASK_OPTS="--no-quarantine" brew reinstall --cask sthbryan/tap/curie
 
 - Curie: https://github.com/sthbryan/curie
 - Fizza: https://github.com/sthbryan/fizza
+- Foundry Tunnel Manager: https://github.com/sthbryan/ftm
