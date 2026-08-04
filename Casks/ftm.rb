@@ -17,13 +17,17 @@ cask "ftm" do
   depends_on arch: :arm64
   depends_on macos: :catalina
 
-  app "ftm-desktop-macos.app"
+  # The zip ships the .app under the asset-friendly slug ftm-desktop-macos.app,
+  # but the visible bundle name (CFBundleDisplayName inside) is "Foundry Tunnel
+  # Manager". Rename on install so /Applications shows the friendly name
+  # instead of the slug.
+  app "ftm-desktop-macos.app", target: "Foundry Tunnel Manager.app"
 
   # Unsigned GitHub-release builds trip Gatekeeper ("damaged and can't be
   # opened"). Ad-hoc sign and strip xattrs so first launch works after
   # `brew install --cask`, matching what we do for curie.
   postflight do
-    app_path = "#{appdir}/ftm-desktop-macos.app"
+    app_path = "#{appdir}/Foundry Tunnel Manager.app"
     system_command "/usr/bin/codesign",
                    args: ["--force", "--deep", "--sign", "-", app_path]
     system_command "/usr/bin/xattr",
@@ -40,8 +44,8 @@ cask "ftm" do
   caveats <<~EOS
     ftm is not notarized yet. If macOS says the app is damaged, run:
 
-      codesign --force --deep --sign - #{appdir}/ftm-desktop-macos.app
-      xattr -cr #{appdir}/ftm-desktop-macos.app
+      codesign --force --deep --sign - "#{appdir}/Foundry Tunnel Manager.app"
+      xattr -cr "#{appdir}/Foundry Tunnel Manager.app"
 
     Or reinstall without Homebrew quarantine:
 
