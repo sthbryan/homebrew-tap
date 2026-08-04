@@ -1,4 +1,4 @@
-class Ftm < Formula
+class FtmCli < Formula
   desc "Share your Foundry VTT world without port forwarding (CLI + local web)"
   homepage "https://github.com/sthbryan/ftm"
   version "0.11.0"
