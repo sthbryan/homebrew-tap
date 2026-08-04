@@ -1,6 +1,6 @@
 cask "ftm" do
-  version "0.11.0"
-  sha256 "48305000149ca6de6a541756421d30b91ca99d9b7eef8036fe3bf352e89152d5"
+  version "0.12.0"
+  sha256 "cc68ad696aaf67dc7d8070598b564ca1707b4c62d55af772d9598accb15283c8"
 
   url "https://github.com/sthbryan/ftm/releases/download/v#{version}/ftm-desktop-macos.app.zip"
   name "Foundry Tunnel Manager"
@@ -17,10 +17,9 @@ cask "ftm" do
   depends_on arch: :arm64
   depends_on macos: :catalina
 
-  # The zip ships the .app under the asset-friendly slug ftm-desktop-macos.app,
-  # but the visible bundle name (CFBundleDisplayName) is "Foundry Tunnel
-  # Manager". Rename on install so /Applications shows the friendly name.
-  app "ftm-desktop-macos.app", target: "Foundry Tunnel Manager.app"
+  # The outer zip keeps the asset-friendly slug for URL stability, but since
+  # v0.12.0 the bundle inside it is already named "Foundry Tunnel Manager.app".
+  app "Foundry Tunnel Manager.app"
 
   postflight do
     app_path = "#{appdir}/Foundry Tunnel Manager.app"

@@ -1,7 +1,7 @@
 class FtmCli < Formula
   desc "Share your Foundry VTT world without port forwarding (CLI + local web)"
   homepage "https://github.com/sthbryan/ftm"
-  version "0.11.0"
+  version "0.12.0"
   license "MIT"
 
   livecheck do
@@ -12,22 +12,22 @@ class FtmCli < Formula
   on_macos do
     on_arm do
       url "https://github.com/sthbryan/ftm/releases/download/v#{version}/ftm-macos-arm64"
-      sha256 "350f1e54f9eac2d7d3a3d5c1ed5500369c399a870e22e55cfedc354544b92edf"
+      sha256 "826f30b19ba01cddcee42a38c9d1e35657e45ab4f46cea91b4eb541a8ef8bf24"
     end
     on_intel do
       url "https://github.com/sthbryan/ftm/releases/download/v#{version}/ftm-macos-x64"
-      sha256 "eb299d29322a9139be2beba8e7c4358aa596bbebe8c160befe7b9254bcd297c0"
+      sha256 "c2577f05636c27410400a5abeb007fe0a6b1261c5f43c8fb4ea6398974cbda43"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/sthbryan/ftm/releases/download/v#{version}/ftm-linux-arm64"
-      sha256 "cb496f37e93fc6dfc0038524738532f923decbf42e224dc0ee077db9708f2623"
+      sha256 "cf5e8b58b16cec183d5f6c5a7e2547f68bcedf316e0657f21b92910c3af06c3b"
     end
     on_intel do
       url "https://github.com/sthbryan/ftm/releases/download/v#{version}/ftm-linux-x64"
-      sha256 "25e01a2b9baf70a2cef46659000bf782cba9047e075ca43af5ab97fe227020f9"
+      sha256 "7117cf491c793025c7d5127888139134c9fd476604f81a41b8e1eb84f9e04e3f"
     end
   end
 
