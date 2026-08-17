@@ -81,3 +81,19 @@ xattr -cr "$(brew --prefix)/opt/ftm-cli/bin/ftm"
 # or reinstall any of the casks without quarantine
 HOMEBREW_CASK_OPTS="--no-quarantine" brew reinstall --cask sthbryan/tap/<name>
 ```
+
+## Migrating an app's bundle id
+
+When a cask's underlying app changes bundle id (e.g. `com.curie.app` → `com.justcallmebryan.curie`), the user's existing state under the old id is orphaned. `bin/migrate-bundle.sh` moves the four `~/Library/*` paths the cask `zap trash` lists to the new id, so a normal `brew upgrade --cask` does not silently wipe settings.
+
+```bash
+# Dry-run first to see what would move
+bin/migrate-bundle.sh --from com.curie.app --to com.justcallmebryan.curie --dry-run
+
+# Then run for real, then upgrade the cask
+bin/migrate-bundle.sh --from com.curie.app --to com.justcallmebryan.curie
+brew upgrade --cask sthbryan/tap/curie
+```
+
+The script is idempotent: missing sources are skipped, and existing destinations are not overwritten. After the migration, the old bundle id directory will be gone, so the `zap trash` paths in the cask should be updated to the new id at the same time the cask is bumped.
+
