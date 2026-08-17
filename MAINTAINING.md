@@ -4,6 +4,15 @@ This repo only holds package definitions. Binaries are published to the GitHub R
 
 ## Releasing and updating packages
 
+### Apex (cask)
+
+Each release publishes a DMG. Update `Casks/apex.rb`:
+
+1. Upload `Apex_<version>_aarch64.dmg` to the GitHub Release.
+2. `shasum -a 256 Apex_<version>_aarch64.dmg`
+3. Bump `version` and `sha256` in `Casks/apex.rb`.
+4. Commit and push this tap.
+
 ### Curie (cask)
 
 Each release publishes a DMG. Update `Casks/curie.rb`:
@@ -49,6 +58,10 @@ Until those fields change, `brew upgrade` will not install the new build.
 None of the packages are notarized. The tap ad-hoc codesigns and strips quarantine xattrs on install. If macOS still blocks them:
 
 ```bash
+# Apex
+codesign --force --deep --sign - /Applications/Apex.app
+xattr -cr /Applications/Apex.app
+
 # Curie
 codesign --force --deep --sign - /Applications/Curie.app
 xattr -cr /Applications/Curie.app
