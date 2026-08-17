@@ -1,6 +1,6 @@
 cask "ftm" do
-  version "0.15.0"
-  sha256 "b996d014bf158cf8eac8fae21186f267dcfe88f8dfb344375fec526e62b931d8"
+  version "0.16.0"
+  sha256 "e11756af3ae576b9157f25f7250cd0bc6e27995e53bad6f9aece1a9a7c4ef105"
 
   url "https://github.com/sthbryan/ftm/releases/download/v#{version}/ftm-desktop-macos.app.zip"
   name "Foundry Tunnel Manager"
@@ -27,13 +27,35 @@ cask "ftm" do
                    args: ["--force", "--deep", "--sign", "-", app_path]
     system_command "/usr/bin/xattr",
                    args: ["-cr", app_path]
+
+    # Migrate user data from the old bundle id so an upgrade from v0.15.x
+    # (where the id was sthbryan.ftm) keeps connections/state.
+    from = "sthbryan.ftm"
+    to   = "com.justcallmebryan.ftm"
+    home = ENV.fetch("HOME")
+    [
+      ["Application Support", false],
+      ["Caches",              false],
+      ["Preferences",         true],
+      ["WebKit",              false],
+    ].each do |sub, plist|
+      src = File.join(home, "Library", sub, plist ? "#{from}.plist" : from)
+      next unless File.exist?(src)
+      dst = src.sub(from, to)
+      if File.exist?(dst)
+        puts "  [skip] #{sub}: destination already exists"
+      else
+        puts "  [move] #{sub}: #{File.basename(src)} -> #{File.basename(dst)}"
+        File.rename(src, dst)
+      end
+    end
   end
 
   zap trash: [
-    "~/Library/Application Support/sthbryan.ftm",
-    "~/Library/Caches/sthbryan.ftm",
-    "~/Library/Preferences/sthbryan.ftm.plist",
-    "~/Library/WebKit/sthbryan.ftm",
+    "~/Library/Application Support/com.justcallmebryan.ftm",
+    "~/Library/Caches/com.justcallmebryan.ftm",
+    "~/Library/Preferences/com.justcallmebryan.ftm.plist",
+    "~/Library/WebKit/com.justcallmebryan.ftm",
   ]
 
   caveats <<~EOS
