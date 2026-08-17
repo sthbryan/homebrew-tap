@@ -1,6 +1,6 @@
 cask "apex" do
-  version "0.3.0"
-  sha256 "04a31f9c8b834b7d4418dd7f3927ccb6b63affca94d4bb35c2eb277fb9b2df0f"
+  version "0.4.0"
+  sha256 "2c1830eb8596b2b8ba69f318fda8bbffe00ba1007dbceb0be2fa38d12164d584"
 
   url "https://github.com/sthbryan/Apex/releases/download/v#{version}/Apex_#{version}_aarch64.dmg"
   name "Apex"
@@ -25,13 +25,35 @@ cask "apex" do
                    args: ["--force", "--deep", "--sign", "-", app_path]
     system_command "/usr/bin/xattr",
                    args: ["-cr", app_path]
+
+    # Migrate user data from the old bundle id so an upgrade from v0.3.x
+    # (where the id was dev.apex.desktop) keeps settings/state.
+    from = "dev.apex.desktop"
+    to   = "com.justcallmebryan.apex"
+    home = ENV.fetch("HOME")
+    [
+      ["Application Support", false],
+      ["Caches",              false],
+      ["Preferences",         true],
+      ["WebKit",              false],
+    ].each do |sub, plist|
+      src = File.join(home, "Library", sub, plist ? "#{from}.plist" : from)
+      next unless File.exist?(src)
+      dst = src.sub(from, to)
+      if File.exist?(dst)
+        puts "  [skip] #{sub}: destination already exists"
+      else
+        puts "  [move] #{sub}: #{File.basename(src)} -> #{File.basename(dst)}"
+        File.rename(src, dst)
+      end
+    end
   end
 
   zap trash: [
-    "~/Library/Application Support/dev.apex.desktop",
-    "~/Library/Caches/dev.apex.desktop",
-    "~/Library/Preferences/dev.apex.desktop.plist",
-    "~/Library/WebKit/dev.apex.desktop",
+    "~/Library/Application Support/com.justcallmebryan.apex",
+    "~/Library/Caches/com.justcallmebryan.apex",
+    "~/Library/Preferences/com.justcallmebryan.apex.plist",
+    "~/Library/WebKit/com.justcallmebryan.apex",
   ]
 
   caveats <<~EOS
