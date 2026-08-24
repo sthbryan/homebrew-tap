@@ -1,6 +1,6 @@
 cask "apex" do
-  version "0.4.0"
-  sha256 "2c1830eb8596b2b8ba69f318fda8bbffe00ba1007dbceb0be2fa38d12164d584"
+  version "0.8.0"
+  sha256 "e440cd1e95b18d1b9f199dc2fa5598d42fe3aac6e80a4994f314cb3a0b0dc350"
 
   url "https://github.com/sthbryan/Apex/releases/download/v#{version}/Apex_#{version}_aarch64.dmg"
   name "Apex"
@@ -16,6 +16,10 @@ cask "apex" do
   # targets are not packaged here.
   depends_on arch: :arm64
   depends_on macos: :high_sierra
+
+  # Since v0.8.0 Apex updates itself from GitHub releases, so `brew upgrade`
+  # only touches it with --greedy.
+  auto_updates true
 
   app "Apex.app"
 
