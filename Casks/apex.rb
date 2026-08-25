@@ -1,6 +1,6 @@
 cask "apex" do
-  version "0.8.0"
-  sha256 "e440cd1e95b18d1b9f199dc2fa5598d42fe3aac6e80a4994f314cb3a0b0dc350"
+  version "0.9.1"
+  sha256 "520d4ba2baec2b8c7a72dce733dbb4f0e8ca125eb1d2e4e4f4b3bb17e8952e83"
 
   url "https://github.com/sthbryan/Apex/releases/download/v#{version}/Apex_#{version}_aarch64.dmg"
   name "Apex"
