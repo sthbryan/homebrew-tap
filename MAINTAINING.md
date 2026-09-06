@@ -13,6 +13,15 @@ Each release publishes a DMG. Update `Casks/apex.rb`:
 3. Bump `version` and `sha256` in `Casks/apex.rb`.
 4. Commit and push this tap.
 
+### Asterism (cask)
+
+Each release publishes a DMG. Update `Casks/asterism.rb`:
+
+1. Upload `Asterism_<version>_aarch64.dmg` to the GitHub Release.
+2. `shasum -a 256 Asterism_<version>_aarch64.dmg`
+3. Bump `version` and `sha256` in `Casks/asterism.rb`.
+4. Commit and push this tap.
+
 ### Curie (cask)
 
 Each release publishes a DMG. Update `Casks/curie.rb`:
@@ -65,6 +74,10 @@ xattr -cr /Applications/Apex.app
 # Curie
 codesign --force --deep --sign - /Applications/Curie.app
 xattr -cr /Applications/Curie.app
+
+# Asterism
+codesign --force --deep --sign - /Applications/Asterism.app
+xattr -cr /Applications/Asterism.app
 
 # Fizza (Homebrew)
 codesign --force --sign - "$(brew --prefix)/opt/fizza/bin/fizza"
