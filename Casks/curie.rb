@@ -13,7 +13,7 @@ cask "curie" do
   end
 
   depends_on arch: :arm64
-  depends_on macos: :big_sur
+  depends_on :macos
 
   app "Curie.app"
 
@@ -28,7 +28,7 @@ cask "curie" do
     # (where the id was com.curie.app) keeps settings/state.
     from = "com.curie.app"
     to   = "com.justcallmebryan.curie"
-    home = ENV.fetch("HOME")
+    home = Dir.home
     [
       ["Application Support", false],
       ["Caches",              false],
@@ -37,6 +37,7 @@ cask "curie" do
     ].each do |sub, plist|
       src = File.join(home, "Library", sub, plist ? "#{from}.plist" : from)
       next unless File.exist?(src)
+
       dst = src.sub(from, to)
       if File.exist?(dst)
         puts "  [skip] #{sub}: destination already exists"
