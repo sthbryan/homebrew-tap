@@ -15,7 +15,7 @@ cask "ftm" do
   # The release pipeline only builds the macOS .app for arm64 (WebKit native
   # and universal binaries are heavier and untested).
   depends_on arch: :arm64
-  depends_on macos: :catalina
+  depends_on :macos
 
   # The outer zip keeps the asset-friendly slug for URL stability, but since
   # v0.12.0 the bundle inside it is already named "Foundry Tunnel Manager.app".
@@ -32,7 +32,7 @@ cask "ftm" do
     # (where the id was sthbryan.ftm) keeps connections/state.
     from = "sthbryan.ftm"
     to   = "com.justcallmebryan.ftm"
-    home = ENV.fetch("HOME")
+    home = Dir.home
     [
       ["Application Support", false],
       ["Caches",              false],
@@ -41,6 +41,7 @@ cask "ftm" do
     ].each do |sub, plist|
       src = File.join(home, "Library", sub, plist ? "#{from}.plist" : from)
       next unless File.exist?(src)
+
       dst = src.sub(from, to)
       if File.exist?(dst)
         puts "  [skip] #{sub}: destination already exists"
