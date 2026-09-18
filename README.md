@@ -1,5 +1,7 @@
 # sthbryan/homebrew-tap
 
+[![brew test-bot](https://github.com/sthbryan/homebrew-tap/actions/workflows/tests.yml/badge.svg)](https://github.com/sthbryan/homebrew-tap/actions/workflows/tests.yml)
+
 Homebrew tap with cask and formula definitions for [Apex](https://github.com/sthbryan/Apex), [Asterism](https://github.com/sthbryan/Asterism), [Curie](https://github.com/sthbryan/curie), [Fizza](https://github.com/sthbryan/fizza), [Foundry Tunnel Manager](https://github.com/sthbryan/ftm), and [Pulso](https://github.com/Zovaris/Pulso).
 
 ## Packages
