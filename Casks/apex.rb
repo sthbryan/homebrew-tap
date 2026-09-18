@@ -12,14 +12,13 @@ cask "apex" do
     strategy :github_latest
   end
 
-  # Release pipeline only ships an arm64 DMG; the Linux .deb / .rpm / .AppImage
-  # targets are not packaged here.
-  depends_on arch: :arm64
-  depends_on macos: :high_sierra
-
   # Since v0.8.0 Apex updates itself from GitHub releases, so `brew upgrade`
   # only touches it with --greedy.
   auto_updates true
+  # Release pipeline only ships an arm64 DMG; the Linux .deb / .rpm / .AppImage
+  # targets are not packaged here.
+  depends_on arch: :arm64
+  depends_on :macos
 
   app "Apex.app"
 
@@ -34,7 +33,7 @@ cask "apex" do
     # (where the id was dev.apex.desktop) keeps settings/state.
     from = "dev.apex.desktop"
     to   = "com.justcallmebryan.apex"
-    home = ENV.fetch("HOME")
+    home = Dir.home
     [
       ["Application Support", false],
       ["Caches",              false],
@@ -43,6 +42,7 @@ cask "apex" do
     ].each do |sub, plist|
       src = File.join(home, "Library", sub, plist ? "#{from}.plist" : from)
       next unless File.exist?(src)
+
       dst = src.sub(from, to)
       if File.exist?(dst)
         puts "  [skip] #{sub}: destination already exists"
