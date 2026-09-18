@@ -60,6 +60,19 @@ The macOS desktop pipeline zips the Wails `.app` as `ftm-desktop-macos.app.zip`.
 3. Bump `version` and `sha256` in `Casks/ftm.rb`.
 4. Commit and push this tap.
 
+### Pulso (cask)
+
+Each release publishes an arm64 DMG. Update `Casks/pulso.rb`:
+
+1. Publish `Pulso_<version>_aarch64.dmg`.
+2. `shasum -a 256 Pulso_<version>_aarch64.dmg`
+3. Bump `version` and `sha256` in `Casks/pulso.rb`.
+4. Commit and push this tap.
+
+Pulso is the only cask on the newer install-steps DSL: it signs the app and clears
+quarantine with `postflight_steps` and the `{{appdir}}` token instead of the legacy
+`postflight` block the other casks still use.
+
 Until those fields change, `brew upgrade` will not install the new build.
 
 ## Gatekeeper on macOS
@@ -86,6 +99,10 @@ xattr -cr "$(brew --prefix)/opt/fizza/bin/fizza"
 # ftm desktop (Homebrew cask)
 codesign --force --deep --sign - /Applications/Foundry\ Tunnel\ Manager.app
 xattr -cr /Applications/Foundry\ Tunnel\ Manager.app
+
+# Pulso (Homebrew cask)
+codesign --force --deep --sign - /Applications/Pulso.app
+xattr -cr /Applications/Pulso.app
 
 # ftm CLI (Homebrew)
 codesign --force --sign - "$(brew --prefix)/opt/ftm-cli/bin/ftm"
