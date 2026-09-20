@@ -30,8 +30,6 @@ cask "gigi" do
     "~/.config/gigi",
     "~/Library/Logs/GiGi",
     "~/Library/Preferences/com.justcallmebryan.gigi.plist",
-    # GiGi shipped as com.codebuff.gigi before 0.3.1.
-    "~/Library/Preferences/com.codebuff.gigi.plist",
   ]
 
   caveats <<~EOS
