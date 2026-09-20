@@ -21,33 +21,32 @@ cask "ftm" do
   # v0.12.0 the bundle inside it is already named "Foundry Tunnel Manager.app".
   app "Foundry Tunnel Manager.app"
 
-  postflight do
-    app_path = "#{appdir}/Foundry Tunnel Manager.app"
-    system_command "/usr/bin/codesign",
-                   args: ["--force", "--deep", "--sign", "-", app_path]
-    system_command "/usr/bin/xattr",
-                   args: ["-cr", app_path]
+  postflight_steps do
+    run "/usr/bin/codesign", args: ["--force", "--deep", "--sign", "-", "{{appdir}}/Foundry Tunnel Manager.app"]
+    run "/usr/bin/xattr", args: ["-cr", "{{appdir}}/Foundry Tunnel Manager.app"]
 
-    # Migrate user data from the old bundle id so an upgrade from v0.15.x
-    # (where the id was sthbryan.ftm) keeps connections/state.
-    from = "sthbryan.ftm"
-    to   = "com.justcallmebryan.ftm"
-    home = Dir.home
-    [
-      ["Application Support", false],
-      ["Caches",              false],
-      ["Preferences",         true],
-      ["WebKit",              false],
-    ].each do |sub, plist|
-      src = File.join(home, "Library", sub, plist ? "#{from}.plist" : from)
-      next unless File.exist?(src)
-
-      dst = src.sub(from, to)
-      if File.exist?(dst)
-        puts "  [skip] #{sub}: destination already exists"
-      else
-        puts "  [move] #{sub}: #{File.basename(src)} -> #{File.basename(dst)}"
-        File.rename(src, dst)
+    # v0.15.x shipped as sthbryan.ftm: carry its state over so an upgrade keeps
+    # connections. A destination that already exists is left untouched.
+    if_path_exists "~/Library/Application Support/sthbryan.ftm" do
+      unless_path_exists "~/Library/Application Support/com.justcallmebryan.ftm" do
+        move "~/Library/Application Support/sthbryan.ftm",
+             "~/Library/Application Support/com.justcallmebryan.ftm"
+      end
+    end
+    if_path_exists "~/Library/Caches/sthbryan.ftm" do
+      unless_path_exists "~/Library/Caches/com.justcallmebryan.ftm" do
+        move "~/Library/Caches/sthbryan.ftm", "~/Library/Caches/com.justcallmebryan.ftm"
+      end
+    end
+    if_path_exists "~/Library/Preferences/sthbryan.ftm.plist" do
+      unless_path_exists "~/Library/Preferences/com.justcallmebryan.ftm.plist" do
+        move "~/Library/Preferences/sthbryan.ftm.plist",
+             "~/Library/Preferences/com.justcallmebryan.ftm.plist"
+      end
+    end
+    if_path_exists "~/Library/WebKit/sthbryan.ftm" do
+      unless_path_exists "~/Library/WebKit/com.justcallmebryan.ftm" do
+        move "~/Library/WebKit/sthbryan.ftm", "~/Library/WebKit/com.justcallmebryan.ftm"
       end
     end
   end

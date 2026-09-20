@@ -17,33 +17,32 @@ cask "curie" do
 
   app "Curie.app"
 
-  postflight do
-    app_path = "#{appdir}/Curie.app"
-    system_command "/usr/bin/codesign",
-                   args: ["--force", "--deep", "--sign", "-", app_path]
-    system_command "/usr/bin/xattr",
-                   args: ["-cr", app_path]
+  postflight_steps do
+    run "/usr/bin/codesign", args: ["--force", "--deep", "--sign", "-", "{{appdir}}/Curie.app"]
+    run "/usr/bin/xattr", args: ["-cr", "{{appdir}}/Curie.app"]
 
-    # Migrate user data from the old bundle id so an upgrade from v0.7.x
-    # (where the id was com.curie.app) keeps settings/state.
-    from = "com.curie.app"
-    to   = "com.justcallmebryan.curie"
-    home = Dir.home
-    [
-      ["Application Support", false],
-      ["Caches",              false],
-      ["Preferences",         true],
-      ["WebKit",              false],
-    ].each do |sub, plist|
-      src = File.join(home, "Library", sub, plist ? "#{from}.plist" : from)
-      next unless File.exist?(src)
-
-      dst = src.sub(from, to)
-      if File.exist?(dst)
-        puts "  [skip] #{sub}: destination already exists"
-      else
-        puts "  [move] #{sub}: #{File.basename(src)} -> #{File.basename(dst)}"
-        File.rename(src, dst)
+    # v0.7.x shipped as com.curie.app: carry its state over so an upgrade keeps
+    # settings. A destination that already exists is left untouched.
+    if_path_exists "~/Library/Application Support/com.curie.app" do
+      unless_path_exists "~/Library/Application Support/com.justcallmebryan.curie" do
+        move "~/Library/Application Support/com.curie.app",
+             "~/Library/Application Support/com.justcallmebryan.curie"
+      end
+    end
+    if_path_exists "~/Library/Caches/com.curie.app" do
+      unless_path_exists "~/Library/Caches/com.justcallmebryan.curie" do
+        move "~/Library/Caches/com.curie.app", "~/Library/Caches/com.justcallmebryan.curie"
+      end
+    end
+    if_path_exists "~/Library/Preferences/com.curie.app.plist" do
+      unless_path_exists "~/Library/Preferences/com.justcallmebryan.curie.plist" do
+        move "~/Library/Preferences/com.curie.app.plist",
+             "~/Library/Preferences/com.justcallmebryan.curie.plist"
+      end
+    end
+    if_path_exists "~/Library/WebKit/com.curie.app" do
+      unless_path_exists "~/Library/WebKit/com.justcallmebryan.curie" do
+        move "~/Library/WebKit/com.curie.app", "~/Library/WebKit/com.justcallmebryan.curie"
       end
     end
   end

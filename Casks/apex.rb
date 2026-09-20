@@ -22,33 +22,32 @@ cask "apex" do
 
   app "Apex.app"
 
-  postflight do
-    app_path = "#{appdir}/Apex.app"
-    system_command "/usr/bin/codesign",
-                   args: ["--force", "--deep", "--sign", "-", app_path]
-    system_command "/usr/bin/xattr",
-                   args: ["-cr", app_path]
+  postflight_steps do
+    run "/usr/bin/codesign", args: ["--force", "--deep", "--sign", "-", "{{appdir}}/Apex.app"]
+    run "/usr/bin/xattr", args: ["-cr", "{{appdir}}/Apex.app"]
 
-    # Migrate user data from the old bundle id so an upgrade from v0.3.x
-    # (where the id was dev.apex.desktop) keeps settings/state.
-    from = "dev.apex.desktop"
-    to   = "com.justcallmebryan.apex"
-    home = Dir.home
-    [
-      ["Application Support", false],
-      ["Caches",              false],
-      ["Preferences",         true],
-      ["WebKit",              false],
-    ].each do |sub, plist|
-      src = File.join(home, "Library", sub, plist ? "#{from}.plist" : from)
-      next unless File.exist?(src)
-
-      dst = src.sub(from, to)
-      if File.exist?(dst)
-        puts "  [skip] #{sub}: destination already exists"
-      else
-        puts "  [move] #{sub}: #{File.basename(src)} -> #{File.basename(dst)}"
-        File.rename(src, dst)
+    # v0.3.x shipped as dev.apex.desktop: carry its state over so an upgrade
+    # keeps settings. A destination that already exists is left untouched.
+    if_path_exists "~/Library/Application Support/dev.apex.desktop" do
+      unless_path_exists "~/Library/Application Support/com.justcallmebryan.apex" do
+        move "~/Library/Application Support/dev.apex.desktop",
+             "~/Library/Application Support/com.justcallmebryan.apex"
+      end
+    end
+    if_path_exists "~/Library/Caches/dev.apex.desktop" do
+      unless_path_exists "~/Library/Caches/com.justcallmebryan.apex" do
+        move "~/Library/Caches/dev.apex.desktop", "~/Library/Caches/com.justcallmebryan.apex"
+      end
+    end
+    if_path_exists "~/Library/Preferences/dev.apex.desktop.plist" do
+      unless_path_exists "~/Library/Preferences/com.justcallmebryan.apex.plist" do
+        move "~/Library/Preferences/dev.apex.desktop.plist",
+             "~/Library/Preferences/com.justcallmebryan.apex.plist"
+      end
+    end
+    if_path_exists "~/Library/WebKit/dev.apex.desktop" do
+      unless_path_exists "~/Library/WebKit/com.justcallmebryan.apex" do
+        move "~/Library/WebKit/dev.apex.desktop", "~/Library/WebKit/com.justcallmebryan.apex"
       end
     end
   end
