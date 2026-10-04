@@ -1,6 +1,6 @@
 cask "pulso" do
-  version "0.2.1"
-  sha256 "b4cdc6e0bfc6126017af5445becda99714c3a6c83e2609e118e7649b202bfbb2"
+  version "0.3.0"
+  sha256 "2fbdbaea68eb0d99e03b607d3da797ab88d696d1f73c194d0380c2c560d8a429"
 
   url "https://github.com/Zovaris/Pulso/releases/download/v#{version}/Pulso_#{version}_aarch64.dmg"
   name "Pulso"

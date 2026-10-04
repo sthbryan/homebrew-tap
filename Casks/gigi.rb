@@ -1,6 +1,6 @@
 cask "gigi" do
-  version "0.4.1"
-  sha256 "b7fa0497589535a14c36679ee9b5cbeb11c75f302bd79cbf92bbd921ca4986a6"
+  version "0.4.3"
+  sha256 "fc081e3db14c8f4ef2d506e5e1254fc50a306c1ddbe7c98477a51950bf4fad8c"
 
   url "https://github.com/Zovaris/GiGi/releases/download/v#{version}/GiGi-#{version}-macos-arm64.zip"
   name "GiGi"
