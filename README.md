@@ -1,6 +1,7 @@
 # sthbryan/homebrew-tap
 
 [![CI](https://github.com/sthbryan/homebrew-tap/actions/workflows/tests.yml/badge.svg)](https://github.com/sthbryan/homebrew-tap/actions/workflows/tests.yml)
+[![license](https://img.shields.io/github/license/sthbryan/homebrew-tap?label=license)](LICENSE)
 [![last commit](https://img.shields.io/github/last-commit/sthbryan/homebrew-tap)](https://github.com/sthbryan/homebrew-tap/commits/main)
 [![packages](https://img.shields.io/badge/packages-8-blue)](#packages)
 [![platforms](https://img.shields.io/badge/platforms-macOS%20arm64%20%7C%20Linux%20arm64%2Famd64-lightgrey)](#packages)
