@@ -2,6 +2,24 @@
 
 This repo only holds package definitions. Binaries are published to the GitHub Releases page of each project; this tap is updated by bumping the `version` and `sha256` fields.
 
+## Continuous integration
+
+`.github/workflows/tests.yml` runs `brew test-bot` on every push to `main` that touches
+`Casks/`, `Formula/`, `bin/` or a workflow: `brew style`, `brew readall --os=all
+--arch=all` and `brew audit` over the whole tap, on Linux and macOS. A push that only
+changes documentation does not start a run.
+
+The Intel macOS runner only wakes up for pull requests. It has no `shellcheck` bottle, so
+the syntax phase would compile shellcheck from source there: thirteen minutes instead of
+the forty-five seconds the arm64 runner needs.
+
+CI lints the definitions; it never downloads a release asset. A bump with the right
+`version` and a stale `sha256` passes green, so check the hash yourself before committing:
+
+```bash
+shasum -a 256 <downloaded-asset>
+```
+
 ## Releasing and updating packages
 
 ### Apex (cask)
