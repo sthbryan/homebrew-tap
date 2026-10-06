@@ -6,17 +6,24 @@ on:
       - main
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test-bot:
     strategy:
       matrix:
-        os: [ macos-15-intel, macos-26 ]
+        os: ${{ github.event_name == 'pull_request'
+               && fromJSON('["macos-15-intel", "macos-26"]')
+               || fromJSON('["macos-26"]') }}
         include:
           - os: ubuntu-latest
             container:
               image: ghcr.io/homebrew/brew:main
               options: --privileged
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     container: ${{ fromJSON(toJSON(matrix.container)) }} # zizmor: ignore[unpinned-images]
     permissions:
       actions: read
@@ -42,6 +49,7 @@ jobs:
       - run: brew test-bot --only-setup
 
       - run: brew test-bot --only-tap-syntax
+
       - run: brew test-bot --only-formulae
         if: github.event_name == 'pull_request'
 
