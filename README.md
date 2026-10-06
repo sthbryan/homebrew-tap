@@ -7,7 +7,7 @@
 [![Homebrew tap](https://img.shields.io/badge/Homebrew-tap-FBB040)](https://brew.sh)
 
 A Homebrew tap of cask and formula definitions for the desktop apps and CLIs I
-ship. This repository contains **only package definitions** — every binary is
+ship. This repository contains **only package definitions**. Every binary is
 published to the GitHub Releases page of its own project, and a release here
 means bumping `version` and `sha256`.
 
@@ -28,14 +28,14 @@ brew install sthbryan/tap/fizza          # a CLI
 
 | Package | Type | Platforms | Version | Install |
 | --- | --- | --- | --- | --- |
-| [`apex`](https://github.com/sthbryan/Apex) | Cask — desktop app | macOS arm64 | 0.9.1 | `brew install --cask sthbryan/tap/apex` |
-| [`asterism`](https://github.com/sthbryan/Asterism) | Cask — desktop app | macOS arm64 | 0.2.0 | `brew install --cask sthbryan/tap/asterism` |
-| [`curie`](https://github.com/sthbryan/curie) | Cask — desktop app | macOS arm64 | 0.8.0 | `brew install --cask sthbryan/tap/curie` |
-| [`ftm`](https://github.com/sthbryan/ftm) | Cask — desktop app | macOS arm64 | 0.16.0 | `brew install --cask sthbryan/tap/ftm` |
-| [`gigi`](https://github.com/Zovaris/GiGi) | Cask — desktop app + CLI | macOS arm64 | 1.0.0 | `brew install --cask sthbryan/tap/gigi` |
-| [`pulso`](https://github.com/Zovaris/Pulso) | Cask — desktop app | macOS arm64 | 0.3.0 | `brew install --cask sthbryan/tap/pulso` |
-| [`fizza`](https://github.com/sthbryan/fizza) | Formula — CLI | macOS, Linux (arm64 + amd64) | 1.0.0 | `brew install sthbryan/tap/fizza` |
-| [`ftm-cli`](https://github.com/sthbryan/ftm) | Formula — CLI + local web | macOS, Linux (arm64 + amd64) | 0.16.0 | `brew install sthbryan/tap/ftm-cli` |
+| [`apex`](https://github.com/sthbryan/Apex) | Cask (desktop app) | macOS arm64 | 0.9.1 | `brew install --cask sthbryan/tap/apex` |
+| [`asterism`](https://github.com/sthbryan/Asterism) | Cask (desktop app) | macOS arm64 | 0.2.0 | `brew install --cask sthbryan/tap/asterism` |
+| [`curie`](https://github.com/sthbryan/curie) | Cask (desktop app) | macOS arm64 | 0.8.0 | `brew install --cask sthbryan/tap/curie` |
+| [`ftm`](https://github.com/sthbryan/ftm) | Cask (desktop app) | macOS arm64 | 0.16.0 | `brew install --cask sthbryan/tap/ftm` |
+| [`gigi`](https://github.com/Zovaris/GiGi) | Cask (desktop app + CLI) | macOS arm64 | 1.0.0 | `brew install --cask sthbryan/tap/gigi` |
+| [`pulso`](https://github.com/Zovaris/Pulso) | Cask (desktop app) | macOS arm64 | 0.3.0 | `brew install --cask sthbryan/tap/pulso` |
+| [`fizza`](https://github.com/sthbryan/fizza) | Formula (CLI) | macOS, Linux (arm64 + amd64) | 1.0.0 | `brew install sthbryan/tap/fizza` |
+| [`ftm-cli`](https://github.com/sthbryan/ftm) | Formula (CLI + local web) | macOS, Linux (arm64 + amd64) | 0.16.0 | `brew install sthbryan/tap/ftm-cli` |
 
 Two details worth knowing:
 
@@ -97,8 +97,8 @@ bin/        maintainer scripts, e.g. the bundle-id migration helper
 
 Every push that touches `Casks/`, `Formula/`, `bin/` or the workflows runs
 [`brew test-bot`](https://github.com/sthbryan/homebrew-tap/actions/workflows/tests.yml)
-— `brew style`, `brew readall --os=all --arch=all` and `brew audit` over the
-whole tap — on Linux and macOS. Pushes that only change documentation do not
+(`brew style`, `brew readall --os=all --arch=all` and `brew audit` over the
+whole tap) on Linux and macOS. Pushes that only change documentation do not
 start a run.
 
 ## Maintaining
