@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'Casks/**'
+      - 'Formula/**'
+      - 'bin/**'
+      - '.github/workflows/**'
   pull_request:
 
 concurrency:
