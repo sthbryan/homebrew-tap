@@ -87,11 +87,11 @@ Each release publishes an arm64 DMG. Update `Casks/pulso.rb`:
 3. Bump `version` and `sha256` in `Casks/pulso.rb`.
 4. Commit and push this tap.
 
-Pulso is the only cask on the newer install-steps DSL: it signs the app and clears
-quarantine with `postflight_steps` and the `{{appdir}}` token instead of the legacy
-`postflight` block the other casks still use.
+Every cask signs the app and clears quarantine with `postflight_steps` and the
+`{{appdir}}` token. The legacy `postflight` block is gone from all of them, so a new
+cask should follow the same declarative form.
 
-Until those fields change, `brew upgrade` will not install the new build.
+`brew upgrade` only installs a new build once `version` and `sha256` change.
 
 ## Gatekeeper on macOS
 
