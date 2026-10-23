@@ -3,7 +3,7 @@
 [![CI](https://github.com/sthbryan/homebrew-tap/actions/workflows/tests.yml/badge.svg)](https://github.com/sthbryan/homebrew-tap/actions/workflows/tests.yml)
 [![license: BSD-2-Clause](https://img.shields.io/badge/license-BSD--2--Clause-blue)](LICENSE)
 [![last commit](https://img.shields.io/github/last-commit/sthbryan/homebrew-tap)](https://github.com/sthbryan/homebrew-tap/commits/main)
-[![packages](https://img.shields.io/badge/packages-8-blue)](#packages)
+[![packages](https://img.shields.io/badge/packages-9-blue)](#packages)
 [![platforms](https://img.shields.io/badge/platforms-macOS%20arm64%20%7C%20Linux%20arm64%2Famd64-lightgrey)](#packages)
 [![Homebrew tap](https://img.shields.io/badge/Homebrew-tap-FBB040)](https://brew.sh)
 
@@ -37,6 +37,7 @@ brew install sthbryan/tap/fizza          # a CLI
 | [`pulso`](https://github.com/Zovaris/Pulso) | Cask (desktop app) | macOS arm64 | 0.3.0 | `brew install --cask sthbryan/tap/pulso` |
 | [`fizza`](https://github.com/sthbryan/fizza) | Formula (CLI) | macOS, Linux (arm64 + amd64) | 1.0.0 | `brew install sthbryan/tap/fizza` |
 | [`ftm-cli`](https://github.com/sthbryan/ftm) | Formula (CLI + local web) | macOS, Linux (arm64 + amd64) | 0.16.0 | `brew install sthbryan/tap/ftm-cli` |
+| [`vistan`](https://github.com/Zovaris/Vistan) | Formula (CLI) | macOS, Linux (arm64 + amd64) | 0.1.0 | `brew install sthbryan/tap/vistan` |
 
 Two details worth knowing:
 

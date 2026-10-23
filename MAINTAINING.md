@@ -145,3 +145,12 @@ brew upgrade --cask sthbryan/tap/curie
 
 The script is idempotent: missing sources are skipped, and existing destinations are not overwritten. After the migration, the old bundle id directory will be gone, so the `zap trash` paths in the cask should be updated to the new id at the same time the cask is bumped.
 
+### Vistan (formula)
+
+Each release publishes platform tarballs. Update `Formula/vistan.rb`:
+
+1. Publish `vistan_<version>_{darwin,linux}_{arm64,amd64}.tar.gz`.
+2. Copy hashes from `checksums.txt` on the release page (or `shasum -a 256`).
+3. Replace the version in every `url` and every `sha256`; the formula carries no
+   `version` line, the URL is what Homebrew scans.
+4. Commit and push this tap.
