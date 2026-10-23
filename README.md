@@ -37,7 +37,7 @@ brew install sthbryan/tap/fizza          # a CLI
 | [`pulso`](https://github.com/Zovaris/Pulso) | Cask (desktop app) | macOS arm64 | 0.3.0 | `brew install --cask sthbryan/tap/pulso` |
 | [`fizza`](https://github.com/sthbryan/fizza) | Formula (CLI) | macOS, Linux (arm64 + amd64) | 1.0.0 | `brew install sthbryan/tap/fizza` |
 | [`ftm-cli`](https://github.com/sthbryan/ftm) | Formula (CLI + local web) | macOS, Linux (arm64 + amd64) | 0.16.0 | `brew install sthbryan/tap/ftm-cli` |
-| [`vistan`](https://github.com/Zovaris/Vistan) | Formula (CLI) | macOS, Linux (arm64 + amd64) | 0.1.1 | `brew install sthbryan/tap/vistan` |
+| [`vistan`](https://github.com/Zovaris/Vistan) | Formula (CLI) | macOS, Linux (arm64 + amd64) | 0.1.2 | `brew install sthbryan/tap/vistan` |
 
 Two details worth knowing:
 

@@ -9,23 +9,23 @@ class Vistan < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/Zovaris/Vistan/releases/download/v0.1.1/vistan_0.1.1_darwin_arm64.tar.gz"
-      sha256 "a1dbb7c60cba003c15f551b13893c2492420066cc0ebeba0be490c504b886c9c"
+      url "https://github.com/Zovaris/Vistan/releases/download/v0.1.2/vistan_0.1.2_darwin_arm64.tar.gz"
+      sha256 "5286860d6fd33665d4b5785b8993f8f7959d7173ce5f9ce6837b0dfe1f849b31"
     end
     on_intel do
-      url "https://github.com/Zovaris/Vistan/releases/download/v0.1.1/vistan_0.1.1_darwin_amd64.tar.gz"
-      sha256 "09eafe91d99effc41c98400777b8aeb2e2cccc72bfdfac28157b34221261be4d"
+      url "https://github.com/Zovaris/Vistan/releases/download/v0.1.2/vistan_0.1.2_darwin_amd64.tar.gz"
+      sha256 "4e946d28944855003e2c56764bf8f7a98efcd98f106a42f56d4b313234c33ee7"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/Zovaris/Vistan/releases/download/v0.1.1/vistan_0.1.1_linux_arm64.tar.gz"
-      sha256 "5502505958b5256ea20c0ad28fdd32646c5983cccd29b014ba792b46bc2308bb"
+      url "https://github.com/Zovaris/Vistan/releases/download/v0.1.2/vistan_0.1.2_linux_arm64.tar.gz"
+      sha256 "60a11934c80f85ec38332d0f402b7d7ed9f2c7458a0b37877ae9e01519b8d408"
     end
     on_intel do
-      url "https://github.com/Zovaris/Vistan/releases/download/v0.1.1/vistan_0.1.1_linux_amd64.tar.gz"
-      sha256 "38db60bf2173481b6060db3bf1aa1f2541e8bb4ab4666765fdc42b5e560a22fe"
+      url "https://github.com/Zovaris/Vistan/releases/download/v0.1.2/vistan_0.1.2_linux_amd64.tar.gz"
+      sha256 "4ab1734b94151e50252ef8d0d8cbc590c6f9e032e1ff4c34d6b31ffb6c82e0cc"
     end
   end
 
