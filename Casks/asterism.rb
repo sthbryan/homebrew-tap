@@ -1,6 +1,6 @@
 cask "asterism" do
-  version "0.2.0"
-  sha256 "23c351d3f41036cadd28496b687a4ba6354c71096f885174027b8f6f7a2cb4cc"
+  version "1.0.0"
+  sha256 "f20a254911805573c033b91a5c6456378e12c0189b242026c9ee9d16a71683b0"
 
   url "https://github.com/sthbryan/Asterism/releases/download/v#{version}/Asterism_#{version}_aarch64.dmg"
   name "Asterism"
