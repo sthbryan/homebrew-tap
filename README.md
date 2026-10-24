@@ -30,7 +30,7 @@ brew install sthbryan/tap/fizza          # a CLI
 | Package | Type | Platforms | Version | Install |
 | --- | --- | --- | --- | --- |
 | [`apex`](https://github.com/sthbryan/Apex) | Cask (desktop app) | macOS arm64 | 0.9.1 | `brew install --cask sthbryan/tap/apex` |
-| [`asterism`](https://github.com/sthbryan/Asterism) | Cask (desktop app) | macOS arm64 | 1.0.0 | `brew install --cask sthbryan/tap/asterism` |
+| [`asterism`](https://github.com/sthbryan/Asterism) | Cask (desktop app) | macOS arm64 | 1.1.0 | `brew install --cask sthbryan/tap/asterism` |
 | [`curie`](https://github.com/sthbryan/curie) | Cask (desktop app) | macOS arm64 | 0.8.0 | `brew install --cask sthbryan/tap/curie` |
 | [`ftm`](https://github.com/sthbryan/ftm) | Cask (desktop app) | macOS arm64 | 0.16.0 | `brew install --cask sthbryan/tap/ftm` |
 | [`gigi`](https://github.com/Zovaris/GiGi) | Cask (desktop app + CLI) | macOS arm64 | 1.0.0 | `brew install --cask sthbryan/tap/gigi` |
