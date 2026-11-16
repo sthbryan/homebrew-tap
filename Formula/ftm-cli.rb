@@ -10,23 +10,23 @@ class FtmCli < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/sthbryan/ftm/releases/download/v0.16.0/ftm-macos-arm64"
-      sha256 "86b4ddc68ac6d21d3ffabf4d47dcd045f6b9f0212650d92b2383113d12e60f98"
+      url "https://github.com/sthbryan/ftm/releases/download/v1.0.0/ftm-macos-arm64"
+      sha256 "3bbcd3648862bbbe080e6edaf14c56978615f13460337815025fbc02b090a3f6"
     end
     on_intel do
-      url "https://github.com/sthbryan/ftm/releases/download/v0.16.0/ftm-macos-x64"
-      sha256 "1d972e61e1db6f94345afc035175b6546e739708dfb7442a120cb299d3efeae5"
+      url "https://github.com/sthbryan/ftm/releases/download/v1.0.0/ftm-macos-x64"
+      sha256 "f57a0e4fa5d25ad5a7358810d67dfc0adb828fb68fe6daba45087cdb3ffbb002"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/sthbryan/ftm/releases/download/v0.16.0/ftm-linux-arm64"
-      sha256 "10ca1aae97cb07672816648a210e3863d1c2bf6f42b5b3cca952dc0db558004b"
+      url "https://github.com/sthbryan/ftm/releases/download/v1.0.0/ftm-linux-arm64"
+      sha256 "ce6db467d489e63a220d0977945865ef18fc1f300e4e2d0d78e20a37b8d74c33"
     end
     on_intel do
-      url "https://github.com/sthbryan/ftm/releases/download/v0.16.0/ftm-linux-x64"
-      sha256 "27b3bed2ea341ae8c30f4fd7f8d26f88938c1aabacb46c79019c20bd4ccd9c16"
+      url "https://github.com/sthbryan/ftm/releases/download/v1.0.0/ftm-linux-x64"
+      sha256 "046ace4df09963dde686f638efb47acc01cb7bb435802a95bd11184622510352"
     end
   end
 

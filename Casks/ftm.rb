@@ -1,6 +1,6 @@
 cask "ftm" do
-  version "0.16.0"
-  sha256 "e11756af3ae576b9157f25f7250cd0bc6e27995e53bad6f9aece1a9a7c4ef105"
+  version "1.0.0"
+  sha256 "1c556106caf024a5bc20aa88a20c9f32fe98560312f47d8be51ed626fed948ae"
 
   url "https://github.com/sthbryan/ftm/releases/download/v#{version}/ftm-desktop-macos.app.zip"
   name "Foundry Tunnel Manager"
